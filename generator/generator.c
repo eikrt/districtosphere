@@ -72,14 +72,14 @@ static struct Planet* createPlanets(int sealevel){
 	static struct Planet planets[SIZE];
 	for (int i = 0; i <SIZE; i++){
 
-
-			int val = perlin(i,i,0.01,1)*100-sealevel;
+			for (int j = 0; j < PLANETSIZE; j++) {
+			int val = perlin(i*32,j*32,0.01,1)*100-sealevel;
 			int roundVal = floor(val);
 		//	planets[0].points[i].height=roundVal;
-			planets[i].points[i].x = i*16;
-			planets[i].points[i].y = i*16;
-
-		
+			planets[i].points[j].x = val;
+			planets[i].points[j].y = val;
+			printf("%i", val);
+		}
 	}
 
 	

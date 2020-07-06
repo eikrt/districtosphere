@@ -32,7 +32,7 @@ void saveEntities(struct Entity* entities, const char* fileName) {
 	fclose(fp);
 
 }
-struct Planet* openWorld(const char * fileName)
+struct Planet* openUniverse(const char * fileName)
 {
 	FILE* fp = fopen(fileName,"rb");
 	if( !fp ) return 0;

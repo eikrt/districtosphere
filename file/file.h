@@ -8,6 +8,6 @@ void saveUniverse(struct Planet* map, const char* fileName);
 void saveEntities(struct Entity* entities, const char* fileName);
 
 
-struct Tile* openWorld(const char* fileName);
+struct Planet* openUniverse(const char* fileName);
 struct Entity* openEntities(const char* fileName);
 #endif

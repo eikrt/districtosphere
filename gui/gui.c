@@ -47,9 +47,9 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	camera.y = 0;
 	SDL_Event e;
 
-	struct Tile* map;
+	struct Planet* planets;
 	struct Entity* entities;
-	map = openWorld("../generator/world/universe.dat");
+	planets = openUniverse("../generator/world/universe.dat");
 	entities = openEntities("../generator/world/entities.dat");
 	int rgb[] = {255,255,255};
 
@@ -84,17 +84,25 @@ else if( e.type == SDL_KEYDOWN )
 			}
 		}
 }
+
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear( renderer );
 		int renderX = camera.x / 16;
 		int renderY = camera.y / 16;
 			
-	
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+		for (int i = 0; i < SIZE; i++) {
+				for (int j=0; j<PLANETSIZE-1; j++){
+					SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[j+1].x - camera.x, planets[i].points[j+1].y - camera.y);	
+					
+				}
+			}	
 						
 			
-		}
+		
 		SDL_RenderPresent(renderer);		
 	SDL_Delay(32);
-
+ }
 	
 quit(window);
 }
