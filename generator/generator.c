@@ -71,18 +71,20 @@ static float perlin(float x, float y, float freq, int depth) // main noise funct
 static struct Planet* createPlanets(int sealevel){
 	static struct Planet planets[SIZE];
 	
-
+	const int planetary_width = 8;
 	for (int i = 0; i <SIZE; i++){
 
 		planets[i].radius = 256;
-			int angle=0;
+			int planet_x = i * planets[i].radius * 4;
+			int planet_y = (i % planetary_width)* 512*0;
+			double angle=0;
 			for (int j = 0; j < PLANETSIZE; j++) {
-				//angle = M_PI%j;
-				int val = perlin(i*32,j*32,0.01,1)*1000-sealevel;
+				angle = ((M_PI*2)/PLANETSIZE)*j;
+				int val = perlin(i*32,j*32,0.01,1)*100+sealevel;
 				int roundVal = floor(val);
 			//	planets[0].points[i].height=roundVal;
-				planets[i].points[j].x = sin(j) * planets[i].radius;
-				planets[i].points[j].y = cos(j) * planets[i].radius;
+				planets[i].points[j].x = planet_x + sin(angle) * (planets[i].radius+val);
+				planets[i].points[j].y = planet_y + cos(angle) * (planets[i].radius+val);
 				//printf("%i", val);
 		}
 	}

@@ -1,6 +1,6 @@
 #ifndef GENERATOR_H_
 #define GENERATOR_H_
-#define SIZE 1
+#define SIZE 64
 static int noiseFromTable(int* table,int x, int y);
 static float interpol(float x, float y, float s);
 static float smoothening(float x, float y, float s);

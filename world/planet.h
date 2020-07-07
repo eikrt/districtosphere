@@ -1,6 +1,6 @@
 #ifndef PLANET_H
 #define PLANET_H
-#define PLANETSIZE 7
+#define PLANETSIZE 64
 #include "point.h"
 struct Planet{
 	unsigned int radius;

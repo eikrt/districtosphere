@@ -92,9 +92,13 @@ else if( e.type == SDL_KEYDOWN )
 			
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		for (int i = 0; i < SIZE; i++) {
-				for (int j=0; j<PLANETSIZE-1; j++){
-					SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[j+1].x - camera.x, planets[i].points[j+1].y - camera.y);	
-					
+				for (int j=0; j<PLANETSIZE; j++){
+					if (j < PLANETSIZE-1)
+
+						SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[j+1].x - camera.x, planets[i].points[j+1].y - camera.y);	
+						else if (j == PLANETSIZE-1)
+						SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[0].x - camera.x, planets[i].points[0].y - camera.y);	
+						
 				}
 			}	
 						
