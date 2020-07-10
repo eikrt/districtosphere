@@ -4,6 +4,8 @@
 #include "point.h"
 struct Planet{
 	unsigned int radius;
+	int center_x;
+	int center_y;
 	struct Point points[PLANETSIZE];
 };
 #endif

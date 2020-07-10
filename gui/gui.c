@@ -1,7 +1,9 @@
 #include "gui.h"
 #include "SDL2/SDL.h"
 #include "../generator/generator.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "../world/point.h"
 #include "../world/entity.h"
 #include "../world/planet.h"
@@ -33,6 +35,7 @@ int main() {
 		SDL_SetRenderDrawColor(renderer, 0xFF,0xFF, 0xFF, 0xFF);
 
 	}
+
 	loop(window, screenSurface, renderer);
 	return 0;
 }
@@ -41,7 +44,10 @@ void init(){
 	
 }
 void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer){
+	
+
 	int running = 1;
+	int delta = 0;
 	struct Camera camera;
 	camera.x = 0;
 	camera.y = 0;
@@ -50,15 +56,25 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	struct Planet* planets;
 	struct Entity* entities;
 	planets = openUniverse("../generator/world/universe.dat");
+	
+
 	entities = openEntities("../generator/world/entities.dat");
+	
 	int rgb[] = {255,255,255};
 
 	
 
+	SDL_Texture* landerTex = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
+	
+	for (int i = 0; i < ENTITYNUMBER; i++) {
+
+                        int rgb2[] = {200,55,255};      
+                        entities[i].texture = colorTexture(landerTex, rgb2);      
+        }
 
 
 	while(running==1) {
-		
+		delta = 10;
 		while (SDL_PollEvent(&e) != 0)
 			{
 
@@ -69,18 +85,33 @@ else if( e.type == SDL_KEYDOWN )
                     {
                         switch( e.key.keysym.sym )
                         {
-                            case SDLK_UP:
-                            camera.y -= 16;
+                       		case SDLK_UP:
+                        	    camera.y -= 16;
 				break;
-                            case SDLK_DOWN:
-                            camera.y += 16;
-                            break;
-                            case SDLK_LEFT:
-                            camera.x -= 16;
-                            break;
-                            case SDLK_RIGHT:
-                            camera.x += 16;
-                            break;
+                         	case SDLK_DOWN:
+                        	    	camera.y += 16;
+                         		break;
+                         	case SDLK_LEFT:
+                           		camera.x -= 16;
+                            		break;
+                        	case SDLK_RIGHT:
+                            		camera.x += 16;
+					break;
+				case SDLK_a:
+					entities[0].angle+=ROTATION_SPEED;
+					break;
+				case SDLK_d:
+					
+					entities[0].angle-=ROTATION_SPEED;
+					break;
+
+				case SDLK_w:
+					entities[0].velocity += LANDER_SPEED;
+					break;
+				
+				case SDLK_s:
+					entities[0].velocity -= LANDER_SPEED;
+                            		break;
 			}
 		}
 }
@@ -100,6 +131,28 @@ else if( e.type == SDL_KEYDOWN )
 						SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[0].x - camera.x, planets[i].points[0].y - camera.y);	
 						
 				}
+			}
+		for (int i = 0; i < ENTITYNUMBER; i++) {
+
+				//logic:
+
+				entities[i].x += (cos(entities[i].angle) * entities[i].velocity)/ (delta * 1000);
+				entities[i].y+= (sin(entities[i].angle) * entities[i].velocity) / (delta * 1000);
+
+
+				// draw:
+				SDL_Rect renderRect;
+	                        entities[i].rect.x = entities[i].x;
+        	                entities[i].rect.y = entities[i].y;
+	
+                	        renderRect.x = entities[i].rect.x - camera.x;
+                       		renderRect.y = entities[i].rect.y - camera.y;
+
+                        	renderRect.w = 32;
+                       		renderRect.h = 32;
+				
+                    		SDL_RenderCopyEx( renderer, entities[i].texture, NULL, &renderRect,entities[i].angle * (180 / M_PI),NULL,SDL_FLIP_NONE);
+
 			}	
 						
 			

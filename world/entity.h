@@ -4,8 +4,10 @@
 struct Entity{
 	char height;
 	unsigned int type;
-	int x;
-	int y;	
+	double x;
+	double y;
+	double velocity;
+	double angle;	
 	SDL_Texture* texture;
 	SDL_Rect rect;
 };

@@ -25,7 +25,7 @@ void saveEntities(struct Entity* entities, const char* fileName) {
 	FILE* fp = fopen(fileName,"wb");
 	
 	if (!fp) return;
-	for (int i = 0; i < SIZE; i++) {
+	for (int i = 0; i < ENTITYNUMBER; i++) {
 		
 		fwrite(&entities[i], sizeof(struct Entity), 1, fp);
 	}

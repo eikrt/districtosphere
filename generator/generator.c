@@ -75,8 +75,13 @@ static struct Planet* createPlanets(int sealevel){
 	for (int i = 0; i <SIZE; i++){
 
 		planets[i].radius = 256;
+			
 			int planet_x = i * planets[i].radius * 4;
 			int planet_y = (i % planetary_width)* 512*0;
+
+			planets[i].center_x = planet_x;
+			planets[i].center_y = planet_y;
+		
 			double angle=0;
 			for (int j = 0; j < PLANETSIZE; j++) {
 				angle = ((M_PI*2)/PLANETSIZE)*j;
@@ -107,8 +112,10 @@ static struct Entity* createEntities() {
 
 					
 			entities[i].type = 1;
-			entities[i].x = rand() % 3 * 16;
-			entities[i].y = rand() % 3 * 16;			
+			entities[i].x = 512- 16;
+			entities[i].y = 288 - 16;
+			entities[i].velocity_x = 0;
+			entities[i].velocity_y = 0;					 entities[i].angle = 0.0;			
 			
 
 		}
