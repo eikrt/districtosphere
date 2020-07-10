@@ -107,9 +107,17 @@ else if( e.type == SDL_KEYDOWN )
 
 				case SDLK_w:
 					entities[0].velocity += LANDER_SPEED;
+				
+				entities[0].dx += (cos(entities[0].angle) * entities[0].velocity)/ (delta * 1000);
+				entities[0].dy+= (sin(entities[0].angle) * entities[0].velocity) / (delta * 1000);
+
 					break;
 				
 				case SDLK_s:
+					
+				entities[0].dx += (cos(entities[0].angle) * entities[0].velocity)/ (delta * 1000);
+				entities[0].dy+= (sin(entities[0].angle) * entities[0].velocity) / (delta * 1000);
+
 					entities[0].velocity -= LANDER_SPEED;
                             		break;
 			}
@@ -136,10 +144,10 @@ else if( e.type == SDL_KEYDOWN )
 
 				//logic:
 
-				entities[i].x += (cos(entities[i].angle) * entities[i].velocity)/ (delta * 1000);
-				entities[i].y+= (sin(entities[i].angle) * entities[i].velocity) / (delta * 1000);
 
 
+				entities[i].x += entities[i].dx / (delta * 1000);
+				entities[i].y += entities[i].dy / (delta * 1000);
 				// draw:
 				SDL_Rect renderRect;
 	                        entities[i].rect.x = entities[i].x;

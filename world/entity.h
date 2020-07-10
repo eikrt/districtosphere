@@ -6,6 +6,8 @@ struct Entity{
 	unsigned int type;
 	double x;
 	double y;
+	double dx;
+	double dy;
 	double velocity;
 	double angle;	
 	SDL_Texture* texture;
