@@ -1,10 +1,10 @@
-OBJS = gui.c gui.h ../file/file.c ../file/file.h ../io/imgload.c ../io/imgload.h
+OBJS = gui.c gui.h ../file/file.c ../file/file.h ../io/imgload.c ../io/imgload.h ../utilities/camera.h ../collision/collision.h
 
 CC = gcc
 
 COMPILER_FLAGS = -w
 
-LINKER_FLAGS = -lSDL2 -lm
+LINKER_FLAGS = -lSDL2 -lm -lSDL2_ttf
 
 OBJ_NAME = application
 

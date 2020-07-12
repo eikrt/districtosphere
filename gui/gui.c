@@ -1,5 +1,6 @@
 #include "gui.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include "../generator/generator.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,12 +10,9 @@
 #include "../world/planet.h"
 #include "../file/file.h"
 #include "../io/imgload.h"
+#include "../utilities/camera.h"
 const int SCREEN_WIDTH = 512*2;
 const int SCREEN_HEIGHT = 288*2;
-struct Camera{
-	int x;
-	int y;
-};
 
 int main() {
 	init();
@@ -55,6 +53,7 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 
 	struct Planet* planets;
 	struct Entity* entities;
+	//load world
 	planets = openUniverse("../generator/world/universe.dat");
 	
 
@@ -62,7 +61,7 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	
 	int rgb[] = {255,255,255};
 
-	
+	//load textures
 
 	SDL_Texture* landerTex = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
 	
@@ -71,8 +70,24 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
                         int rgb2[] = {200,55,255};      
                         entities[i].texture = colorTexture(landerTex, rgb2);      
         }
+	
+	TTF_Init();
 
-
+	TTF_Font* sans = TTF_OpenFont("../res/fonts/8bitoperator.ttf", 10);
+	if (sans == NULL) {
+			printf("font not found");
+			
+		}
+	SDL_Color white = {255,255,255};
+	SDL_Surface* msg_surface = TTF_RenderText_Solid(sans, "Speed", white);
+//	msg_surface = TTF_RenderText_Solid(sans, "Speed: "+ entities[0]);
+	SDL_Rect msg_rect;
+	msg_rect.x=8;
+	msg_rect.y=SCREEN_HEIGHT-60;
+	msg_rect.w=64;
+	msg_rect.h=16;
+	SDL_Texture* msg_texture = SDL_CreateTextureFromSurface(renderer,msg_surface);
+	SDL_FreeSurface(msg_surface);
 	while(running==1) {
 		delta = 10;
 		while (SDL_PollEvent(&e) != 0)
@@ -140,14 +155,25 @@ else if( e.type == SDL_KEYDOWN )
 						
 				}
 			}
+		
+				//player movement
+
+				entities[0].x += entities[0].dx / (delta * 1000);
+				entities[0].y += entities[0].dy / (delta * 1000);
+				//player collision
+				for (int i = 0; i < PLANETSIZE; i++) {
+					struct Point[2] points = 					        	{
+								point 1 
+	point 2			
+						       };
+					collides_line(entities[0].rect, );
+				} 
+
+				// draw:
 		for (int i = 0; i < ENTITYNUMBER; i++) {
 
 				//logic:
-
-
-
-				entities[i].x += entities[i].dx / (delta * 1000);
-				entities[i].y += entities[i].dy / (delta * 1000);
+			
 				// draw:
 				SDL_Rect renderRect;
 	                        entities[i].rect.x = entities[i].x;
@@ -158,17 +184,20 @@ else if( e.type == SDL_KEYDOWN )
 
                         	renderRect.w = 32;
                        		renderRect.h = 32;
-				
-                    		SDL_RenderCopyEx( renderer, entities[i].texture, NULL, &renderRect,entities[i].angle * (180 / M_PI),NULL,SDL_FLIP_NONE);
 
+                    		SDL_RenderCopyEx( renderer, entities[i].texture, NULL, &renderRect,entities[i].angle * (180 / M_PI),NULL,SDL_FLIP_NONE);
+				
+		//		SDL_RenderCopy(renderer, msg_texture, NULL, &msg_rect);
 			}	
 						
 			
 		
 		SDL_RenderPresent(renderer);		
-	SDL_Delay(32);
+	SDL_Delay(16);
  }
-	
+//exit the program
+SDL_FreeSurface(msg_surface);
+SDL_DestroyTexture(msg_texture);	
 quit(window);
 }
 int quit(SDL_Window *window){
