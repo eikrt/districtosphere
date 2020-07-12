@@ -11,6 +11,7 @@
 #include "../file/file.h"
 #include "../io/imgload.h"
 #include "../utilities/camera.h"
+#include "../collision/collision.h"
 const int SCREEN_WIDTH = 512*2;
 const int SCREEN_HEIGHT = 288*2;
 
@@ -161,13 +162,14 @@ else if( e.type == SDL_KEYDOWN )
 				entities[0].x += entities[0].dx / (delta * 1000);
 				entities[0].y += entities[0].dy / (delta * 1000);
 				//player collision
-				for (int i = 0; i < PLANETSIZE; i++) {
-					struct Point[2] points = 					        	{
-								point 1 
-	point 2			
-						       };
-					collides_line(entities[0].rect, );
-				} 
+				for (int i = 0; i < SIZE; i++) {			
+					for (int j = 0; j < PLANETSIZE-1; j++) {
+						static struct Point points[2];
+						points[0] = planets[i].points[j];
+						points[1] = planets[i].points[j+1];
+						printf(collides_line(entities[0].rect, points));
+} 
+				}
 
 				// draw:
 		for (int i = 0; i < ENTITYNUMBER; i++) {

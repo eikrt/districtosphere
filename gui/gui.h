@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef GUI_H_
+#define GUI_H_
 #include "SDL2/SDL.h"
 
 const double ROTATION_SPEED = 0.01;
