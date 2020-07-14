@@ -2,7 +2,7 @@ OBJS = gui.c gui.h ../file/file.c ../file/file.h ../io/imgload.c ../io/imgload.h
 
 CC = gcc
 
-COMPILER_FLAGS = -w
+COMPILER_FLAGS = -w -g
 
 LINKER_FLAGS = -lSDL2 -lm -lSDL2_ttf
 

@@ -1,7 +1,15 @@
-# Saucer
+# Planet Adventure
 ## Description
 lunar lander inspired game
-## project structure
+## Controls
+	camera movement:
+		arrows
+	tilting:
+		a d
+	acceleration:
+		w s
+
+## Project Structure
 	generator:
 		creates the world
 	gui:
@@ -14,6 +22,8 @@ lunar lander inspired game
 		contains mainly structs for tiles and entities
 	res:
 		image files etc.
-	
-## running
-./application
+## Requirements
+SDL2, SDL2ttf	
+
+## Running
+./application in the gui directory

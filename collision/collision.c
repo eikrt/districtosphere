@@ -28,9 +28,7 @@ int collides_rect(SDL_Rect rect, SDL_Rect another_rect) {
 	
 
 }
-void asdf() {
 
-}
 
 
 

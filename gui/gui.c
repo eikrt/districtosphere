@@ -163,11 +163,10 @@ else if( e.type == SDL_KEYDOWN )
 				entities[0].y += entities[0].dy / (delta * 1000);
 				//player collision
 				for (int i = 0; i < SIZE; i++) {			
-					for (int j = 0; j < PLANETSIZE-1; j++) {
+					for (int j = 0; j < PLANETSIZE-2; j++) {
 						static struct Point points[2];
 						points[0] = planets[i].points[j];
 						points[1] = planets[i].points[j+1];
-						printf(collides_line(entities[0].rect, points));
 } 
 				}
 
@@ -193,13 +192,12 @@ else if( e.type == SDL_KEYDOWN )
 			}	
 						
 			
-		
 		SDL_RenderPresent(renderer);		
 	SDL_Delay(16);
  }
 //exit the program
-SDL_FreeSurface(msg_surface);
-SDL_DestroyTexture(msg_texture);	
+//SDL_FreeSurface(msg_surface);
+//SDL_DestroyTexture(msg_texture);	
 quit(window);
 }
 int quit(SDL_Window *window){
