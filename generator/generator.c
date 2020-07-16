@@ -114,6 +114,11 @@ static struct Entity* createEntities() {
 			entities[i].type = 1;
 			entities[i].x = 512- 16;
 			entities[i].y = 288 - 16;
+
+			entities[i].rect.x = entities[i].x;	
+			entities[i].rect.y = entities[i].y;	
+			entities[i].rect.w = 32;	
+			entities[i].rect.h = 32;	
 			entities[i].velocity = 0;
 			entities[i].dx = 0;					 entities[i].angle = 0.0;			
 			entities[i].dy = 0;

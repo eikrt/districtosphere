@@ -167,7 +167,10 @@ else if( e.type == SDL_KEYDOWN )
 						static struct Point points[2];
 						points[0] = planets[i].points[j];
 						points[1] = planets[i].points[j+1];
-} 
+						if (collides_line(entities[0].rect, points) == 1) {
+					return 0;				
+				}
+	} 
 				}
 
 				// draw:

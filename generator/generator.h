@@ -1,6 +1,6 @@
 #ifndef GENERATOR_H_
 #define GENERATOR_H_
-#define SIZE 64
+#define SIZE 1
 #define ENTITYNUMBER 1
 static int noiseFromTable(int* table,int x, int y);
 static float interpol(float x, float y, float s);
