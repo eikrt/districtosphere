@@ -16,13 +16,18 @@ int collides_line(SDL_Rect rect, struct Point* points) {
 	x3 = (float)rect.y + (float)32;
 	x4 = (float) rect.x + (float)32;
 	x4 = (float)rect.y + (float)32;
-	int intersects0 = is_line_intersection(x1,y1,x2,y2,(float)points[0].x,(float)points[0].y,(float)points[1].x,(float)points[1].y);	
-//	int intersects1 = is_line_intersection(x2, y2, x3, y3, points[0].x, points[0].y, points[1].x, points[1].y);	
-//	int intersects2 = is_line_intersection(x3, y3, x4, y4, points[0].x, points[0].y, points[1].x, points[1].y);	
-//	int intersects3 = is_line_intersection(x4, y4, x3, y3, points[0].x, points[0].y, points[1].x, points[1].y);	
-	int intersects1 = 0;
-	int intersects2 = 0;
-	int intersects3 = 0;
+	float px, py, px_1, py_1;
+	if (points[0].y > points[1].y)
+	{
+		px = points[1].x;
+		py = points[1].y;
+		px_1 = points[0].x;
+		py_1 = points[0].y;
+}
+	int intersects0 = is_line_intersection(x1,y1,x2,y2,(float)px,(float)py,(float)px_1,(float)py_1);	
+	int intersects1 = is_line_intersection(x2, y2, x3, y3, px, py, px_1, py_1);	
+	int intersects2 = is_line_intersection(x3, y3, x4, y4, px, py, px_1, py_1);	
+	int intersects3 = is_line_intersection(x4, y4, x3, y3, px, py, px_1, py_1);	
 		
 	if (intersects0 == 1 || intersects1 == 1 || intersects2 == 1 || intersects3 == 1){
 		intersects = 1;
