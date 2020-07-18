@@ -4,12 +4,13 @@
 struct Entity{
 	char height;
 	unsigned int type;
-	double x;
-	double y;
-	double dx;
-	double dy;
-	double velocity;
-	double angle;	
+	float x;
+	float y;
+	float dx;
+	float dy;
+	float velocity;
+	float angle; //direction entity is facing
+	float look_angle; // direction entity is looking
 	SDL_Texture* texture;
 	SDL_Rect rect;
 };

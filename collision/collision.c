@@ -10,12 +10,12 @@ int collides_line(SDL_Rect rect, struct Point* points) {
 	float y1, y2, y3, y4;
 	x1 = (float)rect.x;
 	y1 = (float)rect.y;
-	x2 = (float)rect.x + 32;
+	x2 = (float)rect.x + rect.w;
 	y2 = (float)rect.y;
 	x3 = (float)rect.x;
-	x3 = (float)rect.y + (float)32;
-	x4 = (float) rect.x + (float)32;
-	x4 = (float)rect.y + (float)32;
+	x3 = (float)rect.y + (float)rect.h;
+	x4 = (float) rect.x + (float)rect.w;
+	x4 = (float)rect.y + (float)rect.h;
 	float px, py, px_1, py_1;
 	if (points[0].y > points[1].y)
 	{
@@ -78,9 +78,7 @@ static int is_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y, 
  
 }
 static int point_in_rect(float x1, float y1, float x2, float y2, float i_x, float i_y) {
-
 	float l,r,t,b;
-
     if(x1 < x2) {
 
         l = x1;
@@ -105,22 +103,14 @@ static int point_in_rect(float x1, float y1, float x2, float y2, float i_x, floa
 
     }
     else {
-
         t = y1;
-
         b = y2;
-
     }
-
- 
     if( (i_x+0.01) >= l && (i_x-0.01) <= r && 
             (i_y+0.01) >= t && (i_y-0.01) <= b ){
-
         return 1;
-
     }
     else{
         return 0;
 }
-
 }
