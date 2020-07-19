@@ -8,5 +8,5 @@ static float smoothening(float x, float y, float s);
 static float noise(int* table, float x, float y);
 static float perlin(float x, float y, float freq, int depth);
 static struct Tile* createMap(int sealevel);
-int main();
+int create_universe();
 #endif

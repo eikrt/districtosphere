@@ -127,12 +127,13 @@ static struct Entity* createEntities() {
 
 	return entities;
 }
-int main(){
+int create_universe(){
+
 	struct Planet* map = createPlanets(32);
 	struct Entity* entities = createEntities();
 		
 	saveUniverse(map, "world/universe.dat"); // file module 
 	saveEntities(entities, "world/entities.dat");
-	return 0;	
+	return 0;
 }
 

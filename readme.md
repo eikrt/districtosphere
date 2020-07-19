@@ -1,6 +1,6 @@
-# Planet Adventure
+# Districtosphere
 ## Description
-lunar lander inspired game
+space rpg
 ## Controls
 	camera movement:
 		arrows
@@ -20,6 +20,8 @@ lunar lander inspired game
 		saves and opens worlds
 	world: 
 		contains mainly structs for tiles and entities
+	collisio:
+		collision detection
 	res:
 		image files etc.
 ## Requirements

@@ -37,9 +37,12 @@ int main() {
 	return 0;
 }
 
-void init(){
+void init(struct Planet* planets, struct Entity* entities){
 	
+	planets = openUniverse("../generator/world/universe.dat");
+	entities = openEntities("../generator/world/entities.dat");
 }
+
 void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer){
 	
 	int menu_on = 1;
@@ -53,8 +56,7 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	struct Planet* planets;
 	struct Entity* entities;
 	//load world
-	planets = openUniverse("../generator/world/universe.dat");
-	entities = openEntities("../generator/world/entities.dat");
+	init(planets,entities);
 	int rgb[] = {255,255,255};
 	//load textures
 	SDL_Texture* landerTex = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
@@ -177,6 +179,21 @@ else if( e.type == SDL_KEYDOWN )
 				case SDLK_i:
 					if (selected_menu_button == 0){
 						menu_on = 0;
+					}
+					
+					if (selected_menu_button == 1){
+						menu_on = 0;
+						create_universe();
+					}
+					if (selected_menu_button == 2){
+						menu_on = 0;
+					}
+					if (selected_menu_button == 3){
+						menu_on = 0;
+					}
+					if (selected_menu_button == 4){
+						menu_on = 0;
+						return 0;
 					}
 					break;
                        		case SDLK_UP:
