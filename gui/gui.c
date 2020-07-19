@@ -14,7 +14,6 @@
 #include "../collision/collision.h"
 
 int main() {
-	init();
 	SDL_Window* window = NULL;
 	SDL_Surface* screenSurface = NULL;
 	SDL_Renderer* renderer = NULL;
@@ -37,14 +36,12 @@ int main() {
 	return 0;
 }
 
-void init(struct Planet* planets, struct Entity* entities){
-	
-	planets = openUniverse("../generator/world/universe.dat");
-	entities = openEntities("../generator/world/entities.dat");
+void init(struct Planet** planets, struct Entity** entities){
+	*planets = openUniverse("../generator/world/universe.dat");
+	*entities = openEntities("../generator/world/entities.dat");
 }
 
 void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer){
-	
 	int menu_on = 1;
 	int running = 1;
 	int selected_menu_button = 0;
@@ -56,17 +53,19 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	struct Planet* planets;
 	struct Entity* entities;
 	//load world
-	init(planets,entities);
+	init(&planets,&entities);
 	int rgb[] = {255,255,255};
 	//load textures
 	SDL_Texture* landerTex = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
 	
+
 	for (int i = 0; i < ENTITYNUMBER; i++) {
 
                         int rgb2[] = {200,55,255};      
                         entities[i].texture = colorTexture(landerTex, rgb2);      
         }
 	
+
 	TTF_Init();
 
 	TTF_Font* sans = TTF_OpenFont("../res/fonts/8bitoperator.ttf", MENU_FONT_SIZE);

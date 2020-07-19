@@ -46,6 +46,7 @@ struct Planet* openUniverse(const char * fileName)
 	}
 fclose(fp);
 return universe;
+
 }
 struct Entity* openEntities(const char * fileName) {
 	FILE* fp = fopen(fileName,"rb");
