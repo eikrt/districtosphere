@@ -12,7 +12,7 @@
 #include "../io/imgload.h"
 #include "../utilities/camera.h"
 #include "../collision/collision.h"
-
+const SDL_Texture* lander_texture;
 int main() {
 	SDL_Window* window = NULL;
 	SDL_Surface* screenSurface = NULL;
@@ -22,7 +22,7 @@ int main() {
 		printf("SDL couldn't initialize");	
 	}
 	else {
-		window = SDL_CreateWindow( "Planet Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		window = SDL_CreateWindow( "Districtosphere", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		renderer = SDL_CreateRenderer(window,-1, SDL_RENDERER_ACCELERATED);       		
 		if( window == NULL ) {
             	printf( "Error: %s\n", SDL_GetError());
@@ -37,8 +37,17 @@ int main() {
 }
 
 void init(struct Planet** planets, struct Entity** entities){
+	
+		
 	*planets = openUniverse("../generator/world/universe.dat");
 	*entities = openEntities("../generator/world/entities.dat");
+	struct Entity* d_entities;
+	d_entities = *entities;
+	for (int i = 0; i < ENTITYNUMBER; i++) {
+
+                        int rgb2[] = {200,55,255};      
+                      d_entities[i].texture = colorTexture(lander_texture, rgb2);      
+        }
 }
 
 void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer){
@@ -53,17 +62,14 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	struct Planet* planets;
 	struct Entity* entities;
 	//load world
-	init(&planets,&entities);
+	
 	int rgb[] = {255,255,255};
 	//load textures
-	SDL_Texture* landerTex = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
+	lander_texture = loadTexture(screenSurface, renderer, "../res/lander.bmp", rgb);
 	
 
-	for (int i = 0; i < ENTITYNUMBER; i++) {
+	//init(&planets,&entities);
 
-                        int rgb2[] = {200,55,255};      
-                        entities[i].texture = colorTexture(landerTex, rgb2);      
-        }
 	
 
 	TTF_Init();
@@ -102,32 +108,32 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	SDL_Rect options_rect;
 	SDL_Rect exit_rect;
 
-	msg_rect.x=8;
+	msg_rect.x=16;
 	msg_rect.y=SCREEN_HEIGHT-60;
 	msg_rect.w=64;
 	msg_rect.h=16;
 
-	continue_rect.x = 8;
+	continue_rect.x = 16;
 	continue_rect.y = 16;
 	continue_rect.w = MENU_FONT_SIZE * 8;
 	continue_rect.h = 16;
 	
-	create_rect.x = 8;
+	create_rect.x = 16;
 	create_rect.y = 30;
 	create_rect.w = MENU_FONT_SIZE * 3;
 	create_rect.h = 16;
 
-	load_rect.x = 8;
+	load_rect.x = 16;
 	load_rect.y = 44;
 	load_rect.w = MENU_FONT_SIZE * 5;
 	load_rect.h = 16;
 	
-	options_rect.x = 8;
+	options_rect.x = 16;
 	options_rect.y = 58;
 	options_rect.w = MENU_FONT_SIZE * 7;
 	options_rect.h = 16;
 
-	exit_rect.x = 8;
+	exit_rect.x = 16;
 	exit_rect.y = 72;
 	exit_rect.w = MENU_FONT_SIZE * 4;
 	exit_rect.h = 16;
@@ -175,22 +181,28 @@ else if( e.type == SDL_KEYDOWN )
                     {
                         switch( e.key.keysym.sym )
                         {
-				case SDLK_i:
+				case SDLK_ESCAPE:
+					menu_on = 1;
+					break;
+				case SDLK_RETURN:
 					if (selected_menu_button == 0){
 						menu_on = 0;
+						init(&planets,&entities);
 					}
 					
-					if (selected_menu_button == 1){
+			else if (selected_menu_button == 1){
 						menu_on = 0;
 						create_universe();
+						init(&planets,&entities);
+						
 					}
-					if (selected_menu_button == 2){
+					else if (selected_menu_button == 2){
 						menu_on = 0;
 					}
-					if (selected_menu_button == 3){
+			else if (selected_menu_button == 3){
 						menu_on = 0;
 					}
-					if (selected_menu_button == 4){
+			else if (selected_menu_button == 4){
 						menu_on = 0;
 						return 0;
 					}

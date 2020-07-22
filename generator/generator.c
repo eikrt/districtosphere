@@ -136,4 +136,3 @@ int create_universe(){
 	saveEntities(entities, "world/entities.dat");
 	return 0;
 }
-
