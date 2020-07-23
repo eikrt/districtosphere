@@ -13,6 +13,7 @@
 #include "../utilities/camera.h"
 #include "../collision/collision.h"
 const SDL_Texture* lander_texture;
+int inited = 0;
 int main() {
 	SDL_Window* window = NULL;
 	SDL_Surface* screenSurface = NULL;
@@ -48,6 +49,7 @@ void init(struct Planet** planets, struct Entity** entities){
                         int rgb2[] = {200,55,255};      
                       d_entities[i].texture = colorTexture(lander_texture, rgb2);      
         }
+	inited = 1;
 }
 
 void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer){
@@ -187,6 +189,7 @@ else if( e.type == SDL_KEYDOWN )
 				case SDLK_RETURN:
 					if (selected_menu_button == 0){
 						menu_on = 0;
+						if (!inited)
 						init(&planets,&entities);
 					}
 					
@@ -197,10 +200,12 @@ else if( e.type == SDL_KEYDOWN )
 						
 					}
 					else if (selected_menu_button == 2){
+						init(&planets,&entities);
 						menu_on = 0;
 					}
 			else if (selected_menu_button == 3){
 						menu_on = 0;
+						return 0;
 					}
 			else if (selected_menu_button == 4){
 						menu_on = 0;
