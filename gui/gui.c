@@ -8,6 +8,7 @@
 #include "../world/point.h"
 #include "../world/entity.h"
 #include "../world/planet.h"
+#include "../world/worlddata.h"
 #include "../file/file.h"
 #include "../io/imgload.h"
 #include "../utilities/camera.h"
@@ -37,14 +38,14 @@ int main() {
 	return 0;
 }
 
-void init(struct Planet** planets, struct Entity** entities){
+void init(struct Planet** planets, struct Entity** entities, struct WorldData* world_data){
 	
 		
 	*planets = openUniverse("../generator/world/universe.dat");
 	*entities = openEntities("../generator/world/entities.dat");
 	struct Entity* d_entities;
 	d_entities = *entities;
-	for (int i = 0; i < ENTITYNUMBER; i++) {
+	for (int i = 0; i < world_data.entity_number; i++) {
 
                         int rgb2[] = {200,55,255};      
                       d_entities[i].texture = colorTexture(lander_texture, rgb2);      
@@ -63,6 +64,7 @@ void loop(SDL_Window *window, SDL_Surface *screenSurface, SDL_Renderer* renderer
 	SDL_Event e;
 	struct Planet* planets;
 	struct Entity* entities;
+	struct WorldData world_data;
 	//load world
 	
 	int rgb[] = {255,255,255};
@@ -190,17 +192,17 @@ else if( e.type == SDL_KEYDOWN )
 					if (selected_menu_button == 0){
 						menu_on = 0;
 						if (!inited)
-						init(&planets,&entities);
+						init(&planets,&entities, world_data);
 					}
 					
 			else if (selected_menu_button == 1){
 						menu_on = 0;
 						create_universe();
-						init(&planets,&entities);
+						init(&planets,&entities, world_data);
 						
 					}
 					else if (selected_menu_button == 2){
-						init(&planets,&entities);
+						init(&planets,&entities,world_data);
 						menu_on = 0;
 					}
 			else if (selected_menu_button == 3){
@@ -263,7 +265,7 @@ else if( e.type == SDL_KEYDOWN )
 			int renderX = camera.x / 16;
 			int renderY = camera.y / 16;
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-			for (int i = 0; i < SIZE; i++) {
+			for (int i = 0; i < world_data.planet_size; i++) {
 					for (int j=0; j<PLANETSIZE; j++){
 						if (j < PLANETSIZE-1)
 
@@ -280,7 +282,7 @@ else if( e.type == SDL_KEYDOWN )
 					entities[0].y += entities[0].dy / (delta * 1000);
 				// player actions
 				//player collision
-					for (int i = 0; i < SIZE; i++) {			
+					for (int i = 0; i < world_data.planets_size; i++) {			
 						for (int j = 0; j < PLANETSIZE-2; j++) {
 							static struct Point points[2];
 							points[0] = planets[i].points[j];
@@ -292,7 +294,7 @@ else if( e.type == SDL_KEYDOWN )
 				}
 
 				// draw:
-			for (int i = 0; i < ENTITYNUMBER; i++) {
+			for (int i = 0; i < world_data.entity_number; i++) {
 	
 					//logic:
 				

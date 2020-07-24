@@ -103,9 +103,9 @@ static struct Planet* createPlanets(int sealevel){
 	//add 	
 	return planets;
 }
-static struct Entity* createEntities() {
+static struct Entity* createEntities(unsigned int entities_size) {
 
-	static struct Entity entities[1];
+	static struct Entity entities[entities_size];
 	
 	time_t t;
 	srand((unsigned) time(&t));
@@ -123,17 +123,20 @@ static struct Entity* createEntities() {
 			entities[i].velocity = 0;
 			entities[i].dx = 0;						 entities[i].angle = 0.0;			
 			entities[i].dy = 0;
-
+			
 		}
-
+		
 	return entities;
 }
 int create_universe(){
-
 	struct Planet* map = createPlanets(32);
-	struct Entity* entities = createEntities();
-		
+	struct Entity* entities = createEntities(entities_size);
+	struct WorldData data;
+	data.entities_size = 1;
+	data.planets_size = 64;
+	saveData(data,"../generator/world/data.dat");
 	saveUniverse(map, "../generator/world/universe.dat"); // file module 
 	saveEntities(entities, "../generator/world/entities.dat");
+	
 	return 0;
 }
