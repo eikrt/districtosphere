@@ -68,11 +68,11 @@ static float perlin(float x, float y, float freq, int depth) // main noise funct
 	return value;
 }
 
-static struct Planet* createPlanets(int sealevel){
-	static struct Planet planets[SIZE];
+static struct Planet* createPlanets(unsigned int planets_size, int sealevel){
+	struct Planet planets[planets_size];
 	
 	const int planetary_width = 8;
-	for (int i = 0; i <SIZE; i++){
+	for (int i = 0; i <planets_size; i++){
 		srandom(time(0));
 		planets[i].radius = 128 + random() % 512;
 			
@@ -105,11 +105,11 @@ static struct Planet* createPlanets(int sealevel){
 }
 static struct Entity* createEntities(unsigned int entities_size) {
 
-	static struct Entity entities[entities_size];
+	struct Entity entities[entities_size];
 	
 	time_t t;
 	srand((unsigned) time(&t));
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < entities_size; i++) {
 
 					
 			entities[i].type = 1;
@@ -129,14 +129,17 @@ static struct Entity* createEntities(unsigned int entities_size) {
 	return entities;
 }
 int create_universe(){
-	struct Planet* map = createPlanets(32);
-	struct Entity* entities = createEntities(entities_size);
+
 	struct WorldData data;
-	data.entities_size = 1;
-	data.planets_size = 64;
+	data.entities_size = (unsigned int)1;
+	data.planets_size = (unsigned int)1;
+	struct Planet* map = createPlanets(data.planets_size, 32);
+	struct Entity* entities = createEntities(data.entities_size);
+	
 	saveData(data,"../generator/world/data.dat");
-	saveUniverse(map, "../generator/world/universe.dat"); // file module 
-	saveEntities(entities, "../generator/world/entities.dat");
+	saveUniverse(&map,data.planets_size, "../generator/world/universe.dat"); // file module 
+	
+	saveEntities(&entities, data.entities_size,"../generator/world/entities.dat");
 	
 	return 0;
 }

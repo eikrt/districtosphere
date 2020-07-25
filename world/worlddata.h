@@ -3,5 +3,5 @@
 struct WorldData{
 	unsigned int entities_size;
 	unsigned int planets_size;
-}
+};
 #endif

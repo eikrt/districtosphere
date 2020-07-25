@@ -8,20 +8,29 @@
 #include "../world/worlddata.h"
 #include "../generator/generator.h"
 
-
-
-
-void saveUniverse(struct Planet* map, int planets_size, const char* fileName)
+struct WorldData openWorldData(const char* fileName) {
+	FILE* fp = fopen(fileName,"rb");
+	if (!fp) return;
+	int n = 0;
+	static struct WorldData world_data;
+	for (n=0; !feof(fp); ++n) {
+			fread(&world_data, sizeof(struct WorldData), 1, fp);
+		}
+	fclose(fp);
+	return world_data;
+}
+void saveUniverse(struct Planet* map, unsigned int planets_size, const char* fileName)
 {
-  FILE* fp = fopen(fileName,"wb");
 
+  FILE* fp = fopen(fileName,"wb");
 	if (!fp) return;
 	for (int i = 0; i < planets_size; i++){
   			fwrite( &map[i], sizeof(struct Planet), 1, fp);
 	}
+
   fclose(fp);
 }
-void saveEntities(struct Entity* entities, entity_number, const char* fileName) {
+void saveEntities(struct Entity* entities, unsigned int entity_number, const char* fileName) {
 
 	FILE* fp = fopen(fileName,"wb");
 	
@@ -30,26 +39,30 @@ void saveEntities(struct Entity* entities, entity_number, const char* fileName) 
 		
 		fwrite(&entities[i], sizeof(struct Entity), 1, fp);
 	}
+	
 	fclose(fp);
 
 }
 void saveData(struct WorldData world_data, const char* fileName) {
 	FILE* fp = fopen(fileName,"wb");
 	if (!fp) return;
-	fwrite(&entities[i], sizeof(struct WorldData), 1, fp);
+	fwrite(&world_data, sizeof(struct WorldData), 1, fp);
+	fclose(fp);
 } 
 struct Planet* openUniverse(const char * fileName)
 {
 	FILE* fp = fopen(fileName,"rb");
-	if( !fp ) return 0;
+	if( !fp ) return;
 	int n = 0;
-	static struct Planet universe[SIZE];
+	struct Planet universe[1];
 	struct Planet planet;
-
 	for (n=0; !feof(fp); ++n) {
 		fread(&planet, sizeof(struct Planet), 1, fp);
-		universe[n] = planet; 
+		
+		universe[n] = planet;
+		 
 	}
+
 fclose(fp);
 return universe;
 
@@ -67,14 +80,4 @@ struct Entity* openEntities(const char * fileName) {
 	fclose(fp);
 	return entities;
 }
-struct WorldData openWorldData(const char* fileName) {
-	FILE* fp = fopen(fileName,"rb");
-	if (!fp) return 0;
-	int n = 0;
-	static struct WorldData world_data;
-	for (n=0; !feof(fp); ++n) {
-			fread(&world_data, sizeof(struct WorldData), 1, fp);
-		}
-	fclose(fp);
-	return world_data;
-}
+

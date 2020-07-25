@@ -3,9 +3,9 @@
 #include "../world/point.h"
 #include "../world/planet.h"
 #include "../world/entity.h"
-#include "..world/worlddata.h"
-void saveUniverse(struct Planet* map, const char* fileName);
-void saveEntities(struct Entity* entities, const char* fileName);
+#include "../world/worlddata.h"
+void saveUniverse(struct Planet* map, unsigned int planets_size, const char* fileName);
+void saveEntities(struct Entity* entities, unsigned int planets_size, const char* fileName);
 void saveData(struct WorldData data, const char* fileName);
 struct Planet* openUniverse(const char* fileName);
 struct Entity* openEntities(const char* fileName);

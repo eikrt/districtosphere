@@ -40,15 +40,20 @@ int main() {
 
 void init(struct Planet** planets, struct Entity** entities, struct WorldData* world_data){
 	
+	*world_data = openWorldData("../generator/world/worlddata.dat");	
 		
 	*planets = openUniverse("../generator/world/universe.dat");
+	
 	*entities = openEntities("../generator/world/entities.dat");
+	
 	struct Entity* d_entities;
 	d_entities = *entities;
-	for (int i = 0; i < world_data.entity_number; i++) {
+	for (int i = 0; i < world_data->entities_size; i++) {
 
                         int rgb2[] = {200,55,255};      
-                      d_entities[i].texture = colorTexture(lander_texture, rgb2);      
+                      d_entities[i].texture = colorTexture(lander_texture, rgb2);
+		
+				      
         }
 	inited = 1;
 }
@@ -192,17 +197,18 @@ else if( e.type == SDL_KEYDOWN )
 					if (selected_menu_button == 0){
 						menu_on = 0;
 						if (!inited)
-						init(&planets,&entities, world_data);
+						init(&planets,&entities, &world_data);
 					}
 					
 			else if (selected_menu_button == 1){
 						menu_on = 0;
+			
 						create_universe();
-						init(&planets,&entities, world_data);
 						
+						init(&planets,&entities, &world_data);
 					}
 					else if (selected_menu_button == 2){
-						init(&planets,&entities,world_data);
+						init(&planets,&entities,&world_data);
 						menu_on = 0;
 					}
 			else if (selected_menu_button == 3){
@@ -265,9 +271,9 @@ else if( e.type == SDL_KEYDOWN )
 			int renderX = camera.x / 16;
 			int renderY = camera.y / 16;
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-			for (int i = 0; i < world_data.planet_size; i++) {
-					for (int j=0; j<PLANETSIZE; j++){
-						if (j < PLANETSIZE-1)
+			for (int i = 0; i < world_data.planets_size; i++) {
+					for (int j=0; j<world_data.planets_size; j++){
+						if (j < world_data.planets_size-1)
 
 							SDL_RenderDrawLine(renderer,planets[i].points[j].x - camera.x, planets[i].points[j].y - camera.y, planets[i].points[j+1].x - camera.x, planets[i].points[j+1].y - camera.y);	
 							else if (j == PLANETSIZE-1)
@@ -294,18 +300,19 @@ else if( e.type == SDL_KEYDOWN )
 				}
 
 				// draw:
-			for (int i = 0; i < world_data.entity_number; i++) {
+					
+			for (int i = 0; i < world_data.entities_size; i++) {
 	
 					//logic:
 				
 					// draw:
+			
 					SDL_Rect renderRect;
 	                       		entities[i].rect.x = entities[i].x;
 	        	                entities[i].rect.y = entities[i].y;
 	
         	        	        renderRect.x = entities[i].rect.x - camera.x;
                 	       		renderRect.y = entities[i].rect.y - camera.y;
-
                         		renderRect.w = 32;
                        			renderRect.h = 32;
 

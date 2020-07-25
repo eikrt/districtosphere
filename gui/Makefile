@@ -1,4 +1,4 @@
-OBJS = gui.c gui.h ../file/file.c ../file/file.h ../io/imgload.c ../io/imgload.h ../utilities/camera.h ../collision/collision.c ../collision/collision.h ../world/point.h ../generator/generator.h ../generator/generator.c
+OBJS = gui.c gui.h ../world/worlddata.h ../file/file.c ../file/file.h ../io/imgload.c ../io/imgload.h ../utilities/camera.h ../collision/collision.c ../collision/collision.h ../world/point.h ../generator/generator.h ../generator/generator.c
 
 CC = gcc
 
